@@ -1,12 +1,15 @@
-import { db } from "@/dbconfig/firebase"; // Assuming you only need db here
+import { db } from "@/dbconfig/firebase";
 import { NextResponse } from "next/server";
 import bcrypt from "bcrypt";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import jwt from "jsonwebtoken";
 
+const JWT_SECRET = process.env.JWT_SECRET || "defaultSecret"; // Use environment variable for secret
+
 export async function POST(req) {
   try {
     const { email, password } = await req.json();
+
     if (!email || !password) {
       return NextResponse.json({ message: "Invalid input", status: 400 });
     }
@@ -16,28 +19,25 @@ export async function POST(req) {
       collection(db, "Users"),
       where("email", "==", email)
     );
-    // console.log(userQuery)
     const userSnapshot = await getDocs(userQuery);
-    // console.log(userSnapshot.filters)
 
     if (userSnapshot.empty) {
-      return NextResponse.json({ message: "User not found", status: 404 });
+      // Return a generic error message to avoid revealing whether the email exists
+      return NextResponse.json({ message: "Invalid email or password", status: 401 });
     }
 
     // Assuming email is unique, get the first matching document
     const userDoc = userSnapshot.docs[0];
-    // console.log(userDoc)
     const user = userDoc.data();
-    console.log(user);
 
     // Compare the provided password with the stored hashed password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return NextResponse.json({ message: "Invalid password", status: 401 });
+      return NextResponse.json({ message: "Invalid email or password", status: 401 });
     }
 
     // Generate JWT token
-    const token = jwt.sign({ email: user.email }, "sercretkey", {
+    const token = jwt.sign({ userId: user.id }, JWT_SECRET, {
       expiresIn: "1h",
     });
 
@@ -47,8 +47,9 @@ export async function POST(req) {
       token,
       status: 200,
     });
+
   } catch (error) {
-    console.log("Error while login: " + error);
+    console.error("Error during login:", error);
     return NextResponse.json({ message: "Login failed", status: 500 });
   }
 }
