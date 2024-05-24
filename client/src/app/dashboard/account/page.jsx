@@ -1,17 +1,144 @@
-'use client'
+'use client';
 import React from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { db } from '@/dbconfig/firebase';
 
 export default function Component() {
-
   const { user } = useAuth();
 
-  
-
+  if (!user) {
+    return (
+      <div className=' flex justify-center items-center h-screen'>
+        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+          <rect width="9" height="9" x="1.5" y="1.5" fill="#888888" rx="1">
+            <animate
+              id="svgSpinnersBlocksScale0"
+              attributeName="x"
+              begin="0;svgSpinnersBlocksScale1.end+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="1.5;.5;1.5"
+            />
+            <animate
+              attributeName="y"
+              begin="0;svgSpinnersBlocksScale1.end+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="1.5;.5;1.5"
+            />
+            <animate
+              attributeName="width"
+              begin="0;svgSpinnersBlocksScale1.end+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+            <animate
+              attributeName="height"
+              begin="0;svgSpinnersBlocksScale1.end+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+          </rect>
+          <rect width="9" height="9" x="13.5" y="1.5" fill="#888888" rx="1">
+            <animate
+              attributeName="x"
+              begin="svgSpinnersBlocksScale0.begin+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="13.5;12.5;13.5"
+            />
+            <animate
+              attributeName="y"
+              begin="svgSpinnersBlocksScale0.begin+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="1.5;.5;1.5"
+            />
+            <animate
+              attributeName="width"
+              begin="svgSpinnersBlocksScale0.begin+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+            <animate
+              attributeName="height"
+              begin="svgSpinnersBlocksScale0.begin+0.15s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+          </rect>
+          <rect width="9" height="9" x="13.5" y="13.5" fill="#888888" rx="1">
+            <animate
+              attributeName="x"
+              begin="svgSpinnersBlocksScale0.begin+0.3s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="13.5;12.5;13.5"
+            />
+            <animate
+              attributeName="y"
+              begin="svgSpinnersBlocksScale0.begin+0.3s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="13.5;12.5;13.5"
+            />
+            <animate
+              attributeName="width"
+              begin="svgSpinnersBlocksScale0.begin+0.3s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+            <animate
+              attributeName="height"
+              begin="svgSpinnersBlocksScale0.begin+0.3s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+          </rect>
+          <rect width="9" height="9" x="1.5" y="13.5" fill="#888888" rx="1">
+            <animate
+              id="svgSpinnersBlocksScale1"
+              attributeName="x"
+              begin="svgSpinnersBlocksScale0.begin+0.45s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="1.5;.5;1.5"
+            />
+            <animate
+              attributeName="y"
+              begin="svgSpinnersBlocksScale0.begin+0.45s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="13.5;12.5;13.5"
+            />
+            <animate
+              attributeName="width"
+              begin="svgSpinnersBlocksScale0.begin+0.45s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+            <animate
+              attributeName="height"
+              begin="svgSpinnersBlocksScale0.begin+0.45s"
+              dur="0.6s"
+              keyTimes="0;.2;1"
+              values="9;11;9"
+            />
+          </rect>
+        </svg>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-col md:flex-row items-center md:space-x-8  h-screen bg-gray-900">
+    <div className="flex flex-col md:flex-row items-center md:space-x-8 h-screen bg-gray-900">
       <div className="w-full md:w-1/2 bg-gray-800 p-8 rounded-lg shadow-md flex flex-col justify-between">
         <div>
           <div className="flex items-center space-x-4 mb-6">
@@ -19,38 +146,25 @@ export default function Component() {
               <img className="h-12 w-12 rounded-full" src="/placeholder.svg?height=100&width=100" alt="John Doe" />
             </div>
             <h2 className="text-xl font-semibold text-white">
-              {user?.username}
+              {user.username}
             </h2>
           </div>
           <div className="divide-y space-y-5 divide-gray-700">
-            <div className="py-3 flex justify-between  items-center">
+            <div className="py-3 flex justify-between items-center">
               <span className="text-gray-400">Full name</span>
-              <span className="font-medium text-white">{user?.fullname}</span>
-             
+              <span className="font-medium text-white">{user.fullname}</span>
             </div>
             <div className="py-3 flex justify-between items-center">
-              <span className="text-gray-400">
-                Location</span>
-              <span className="font-medium text-white">
-                {user?.location}</span>
-              
-              
+              <span className="text-gray-400">Location</span>
+              <span className="font-medium text-white">{user.location}</span>
             </div>
             <div className="py-3 flex justify-between items-center">
               <span className="text-gray-400">Email</span>
-              <span className="font-medium text-white">
-                {user?.email}</span>
-                
-                
-             
+              <span className="font-medium text-white">{user.email}</span>
             </div>
-           
             <div className="py-3 flex justify-between items-center">
               <span className="text-gray-400">Date of birth</span>
-              <span className="font-medium text-white">
-                {user?.dateofbirth}</span>
-                
-            
+              <span className="font-medium text-white">{user.dateofbirth}</span>
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.3.6",
+    "@nivo/line": "^0.87.0",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.4.5",
