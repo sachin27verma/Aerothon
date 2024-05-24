@@ -21,15 +21,15 @@ const Navbarhead = () => {
   };
 
   const navItems = [
-    { id: 1, text: 'Home' },
-    { id: 2, text: 'Company' },
-    { id: 3, text: 'Resources' },
+    { id: 1, text: 'Algorithm' },
+    { id: 2, text: 'Weather' },
+    { id: 3, text: 'Api' },
     { id: 4, text: 'About' },
     { id: 5, text: 'Contact' },
   ];
 
   return (
-    <div className='bg-black flex justify-between items-center h-24 mx-auto px-4 text-white'>
+    <div className='bg-gray-900 flex justify-between items-center h-24 mx-auto px-4 text-white'>
       <h1 className='w-full text-3xl font-bold text-[#00df9a]'>AIRBUS</h1>
 
       <div className='hidden md:flex justify-between items-center gap-4'>
@@ -43,6 +43,8 @@ const Navbarhead = () => {
             </li>
           ))}
         </ul>
+        <Link href='/dashboard'> <p>dashboard</p></Link>
+       
         <div className='pl-3 ml-3'>
           {isAuthenticated ? (
             <button className='bg-[#00df9a] text-black px-4 py-2 rounded-lg' onClick={handleLogout}><p>Welcome {user?.username} </p>Logout</button>
@@ -75,6 +77,7 @@ const Navbarhead = () => {
             </li>
           ))}
         </ul>
+        
         {isAuthenticated ? (
             <button className='bg-[#00df9a] text-black px-4 py-2 rounded-lg' onClick={handleLogout}><p>Welcome {user?.username} </p>Logout</button>
           ) : (

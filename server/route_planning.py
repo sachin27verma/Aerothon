@@ -4,9 +4,9 @@ from math import radians, sin, cos, asin, sqrt, floor, atan2
 from weather_severity import *
 from datetime import datetime
 
-lat1, lon1 = 25.2048, 55.2708
-lat2, lon2 = 28.7041, 77.1025
-current_dt=datetime.timestamp(datetime.now())
+# lat1, lon1 = 25.2048, 55.2708
+# lat2, lon2 = 28.7041, 77.1025
+# current_dt=datetime.timestamp(datetime.now())
 
 def get_bearing(lat1, lon1, lat2, lon2):
     dLon = (lon2 - lon1)
@@ -63,7 +63,7 @@ def find_route(lat1, lon1, lat2, lon2, vel, curr_dt):
 
     int_points.append({"lat": lat1, "lon": lon1, "dt": curr_dt})
 
-    for n in range(num_nodes):
+    for n in range(1,num_nodes):
 
         int_dist = n * 150
 
@@ -77,7 +77,7 @@ def find_route(lat1, lon1, lat2, lon2, vel, curr_dt):
 
     arr_est_dt= int(curr_dt + floor(((dist-(num_nodes*150)) / vel) * 3600))
 
-    int_points.append({"lat": lat1, "lon": lon1, "dt": arr_est_dt})
+    int_points.append({"lat": lat2, "lon": lon2, "dt": arr_est_dt})
 
     head=get_bearing(lat1,lon1,int_points[0]["lat"],int_points[0]["lon"])
 
@@ -92,9 +92,9 @@ def gen_live_report(flight_data):
 
     arr_dt = datetime.timestamp(datetime.fromisoformat(arr["estimated"]))
 
-    dest_weather = get_weather(float(dest_lon), float(dest_lat), int(arr_dt), "d3c6844bff7a2935a9ab5b3cde1e097c")
+    dest_weather = get_weather(float(dest_lon), float(dest_lat), int(arr_dt), "ce6252bbef3df47a30a93ae2a72b3dfc")
 
-    if flight_data["live"]!="null":
+    if flight_data["flight_status"]=="active":
 
         curr_data = flight_data["live"]
 
@@ -106,13 +106,15 @@ def gen_live_report(flight_data):
 
         curr_weather = get_weather(float(curr_lon), float(curr_lat), int(curr_dt), "d3c6844bff7a2935a9ab5b3cde1e097c")
 
-    else:
+    elif flight_data["flight_status"]=="scheduled":
 
         org = flight_data["departure"]
 
         curr_lat,curr_lon=get_coord(org["icao"])
 
         curr_dt = datetime.timestamp(datetime.fromisoformat(org["estimated"]))
+
+        curr_weather = get_weather(float(curr_lon), float(curr_lat), int(curr_dt), "d3c6844bff7a2935a9ab5b3cde1e097c")
 
         vel = 900
 
@@ -271,24 +273,25 @@ def alternate_route(route, hazards, vel,curr_dt):
 #
 #         new_route, route_report, bearing =alternate_route(route,hazards,vel,curr_dt)
 #
-#     return dest_weather, curr_weather, new_route, bearing, route_report
+#     return dest_weather, curr_weather, new_route, bearing, route_re
+# port
 
 
 def fetch_route(flight_data):
 
     dest_weather, curr_weather, route, bearing, route_report = gen_live_report(flight_data)
 
-    print(route)
+    # print(route)
 
     hazards = check_route(route_report)
 
-    if flight_data["live"]!="null":
+    if flight_data["flight_status"]=="active":
 
         vel=flight_data["live"]["speed_horizontal"]
 
         curr_dt=datetime.timestamp(datetime.fromisoformat(flight_data["live"]["updated"]))
 
-    else:
+    elif flight_data["flight_status"]=="scheduled":
 
         vel = 900
 
@@ -306,10 +309,10 @@ def fetch_route(flight_data):
 
 
     return {"destination_weather": dest_weather, "current_weather": curr_weather, "route": route,
-                "bearing": bearing, "route_report": route_report},200
+                "bearing": bearing, "route_report": route_report}
 
-response = fetch_route(sample_rt_flights_live["data"][0])
+# response = fetch_route(sample_rt_flights_live["data"][0])
 
-print(response)
+# print(response)
 
 
