@@ -16,7 +16,7 @@ export default function Footer() {
       <input className="flex-1" placeholder="Enter your email" type="email" />
       <button type="submit">Subscribe</button>
     </div> */}
-        <p className="text-center">&copy; 2024</p>
+        <p className="text-center">@ 2024</p>
         <p>All Right Resereved</p>
       </div>
       <div className="flex flex-col w-full items-center">

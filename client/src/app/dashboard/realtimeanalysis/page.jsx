@@ -1,6 +1,6 @@
 'use client'
 import React,{useState} from 'react'
-// import Herosection from '@/app/landingpage/Herosection'
+
 import axios from 'axios';
 import Link from 'next/link';
 
