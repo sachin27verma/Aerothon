@@ -21,8 +21,20 @@ This project provides a solution for planning flight routes while assessing weat
     ```bash
     cd Aerothon
     ```
-### Crosswind Calculation
-The crosswind component is calculated using trigonometric functions to determine the perpendicular component of the wind relative to the runway heading.
+### Route Planning
+
+The Earth is spherical, so the shortest path between two points is an arc called the Great Circle, not a straight line on a map.
+
+Calculation:
+Uses geographic coordinates (latitude and longitude) to calculate the shortest distance, considering the Earth's curvature.
+Formulae used can be seen at below link:
+https://www.movable-type.co.uk/scripts/latlong.html
+
+Benefits:
+Minimizes travel distance
+Reduces fuel consumption
+Decreases flight time
+
 
 ## Error Handling
 
