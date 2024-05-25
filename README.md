@@ -59,5 +59,5 @@ Decreases flight time
 
 ## Presentation
 
-https://drive.google.com/file/d/1LVpqR7s585aBodKREAvgwm426cXD_mc9/view?usp=sharing
+https://drive.google.com/file/d/1FsWGGooKVjQ9Io5tHYqSbfIi6-23OdS0/view?usp=drive_link
 https://docs.google.com/presentation/d/1MiJpqk_UocqMh0T4MyvyC9ylRRlS89gXevym8yMzp68/edit?usp=drive_link
