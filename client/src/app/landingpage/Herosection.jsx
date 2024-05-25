@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Link from "next/link";
+import { useRouter } from 'next/navigation';
+import { useAuth } from "@/context/AuthContext";
 
 export default function Herosection() {
   const [data, setData] = useState([]);
@@ -10,8 +12,12 @@ export default function Herosection() {
   const [depIcao, setDepIcao] = useState("");
   const [arrIcao, setArrIcao] = useState("");
 
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
   const postdata = async () => {
     try {
+      setData([]);
       if (!status || !depIcao || !arrIcao) {
         console.log("Invalid input");
         setLoading(false);
@@ -27,8 +33,16 @@ export default function Herosection() {
       });
 
       if (response.status === 200) {
+        
         console.log("Route: ", response.data.data);
+
+        if(response.data.data===undefined) {
+          alert("Could not find the flight");
+        }
+
         setData(response.data.data);
+        setDepIcao('');
+        setArrIcao('');
       } else {
         console.log("Failed to fetch route");
       }
@@ -39,7 +53,13 @@ export default function Herosection() {
     }
   };
 
-  
+  const handleFindRoutesClick = () => {
+    if (isAuthenticated) {
+      postdata();
+    } else {
+      router.push('/register');
+    }
+  };
 
   return (
     <>
@@ -121,9 +141,9 @@ export default function Herosection() {
                 </div>
                 <button
                   className="w-full bg-[#00df9a] font-bold text-medium p-3 rounded-md tracking-wide uppercase"
-                  onClick={postdata}
+                  onClick={handleFindRoutesClick}
                 >
-                  {loading ? <span>Loading...</span> : <span>Find Flights</span>}
+                  {loading ? <span>Loading...</span> : <span>Find Routes</span>}
                 </button>
                 {data?.length > 0 &&
                   data.map((e, index) => (

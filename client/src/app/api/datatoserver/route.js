@@ -13,6 +13,7 @@ export async function POST(req) {
       });
     //   console.log("reponse from server "+response.data)
     //   console.log(response.data);
+    console.log("response on data on server "+ response)
       console.log(response.data.route);
     //   console.log("respone hai")
       return NextResponse.json({
