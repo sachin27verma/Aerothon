@@ -44,3 +44,8 @@ The crosswind component is calculated using trigonometric functions to determine
 3. Nandini Gour.
 4. Pabbithi Badri.
 5. Sachin Pathak.
+
+## Presentation
+
+https://drive.google.com/file/d/1LVpqR7s585aBodKREAvgwm426cXD_mc9/view?usp=sharing
+https://docs.google.com/presentation/d/1MiJpqk_UocqMh0T4MyvyC9ylRRlS89gXevym8yMzp68/edit?usp=drive_link
