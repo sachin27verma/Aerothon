@@ -1,9 +1,4 @@
-/**
- * v0 by Vercel.
-//  * @see https://v0.dev/t/rVnyIY1Fu91
- * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
-
- */
+import React from 'react'
 import App from '@/app/dashboard/weathereport/page'
 
 export default function Services() {
