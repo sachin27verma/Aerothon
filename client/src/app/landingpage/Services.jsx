@@ -2,7 +2,9 @@
  * v0 by Vercel.
 //  * @see https://v0.dev/t/rVnyIY1Fu91
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
+
  */
+import App from '@/app/dashboard/weathereport/page'
 
 export default function Services() {
     return (
@@ -29,24 +31,7 @@ export default function Services() {
               <p className="text-sm">Harness instant data for strategic planning</p>
             </div>
           </div>
-          <div className="group relative overflow-hidden rounded-lg shadow-lg transition-all hover:scale-105">
-            <img
-              alt="Service 2"
-              className="h-48 w-full object-cover object-center transition-all group-hover:scale-105"
-              height={400}
-              src="https://t4.ftcdn.net/jpg/02/66/38/15/360_F_266381525_alVrbw15u5EjhIpoqqa1eI5ghSf7hpz7.jpg"
-              style={{
-                aspectRatio: "600/400",
-                objectFit: "cover",
-              }}
-              width={600}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center text-white">
-              <h3 className="text-lg font-semibold">Weather Update</h3>
-              <p className="text-sm">tay ahead with live updates on weather conditions.</p>
-            </div>
-          </div>
+         <App/>
           <div className="group relative overflow-hidden rounded-lg shadow-lg transition-all hover:scale-105">
             <img
               alt="Service 3"

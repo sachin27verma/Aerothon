@@ -5,6 +5,8 @@
  */
 import Link from "next/link"
 
+
+
 export default function Showcase() {
   return (
     <section className="w-10/12 mx-auto pb-20 bg-gray-900 text-white">

@@ -92,9 +92,9 @@ def gen_live_report(flight_data):
 
     arr_dt = datetime.timestamp(datetime.fromisoformat(arr["estimated"]))
 
-    dest_weather = get_weather(float(dest_lon), float(dest_lat), int(arr_dt), "ce6252bbef3df47a30a93ae2a72b3dfc")
+    dest_weather = get_weather(float(dest_lon), float(dest_lat), int(arr_dt), "d3c6844bff7a2935a9ab5b3cde1e097c")
 
-    if flight_data["flight_status"]=="active":
+    if flight_data["live"]!=None:
 
         curr_data = flight_data["live"]
 
@@ -106,7 +106,7 @@ def gen_live_report(flight_data):
 
         curr_weather = get_weather(float(curr_lon), float(curr_lat), int(curr_dt), "d3c6844bff7a2935a9ab5b3cde1e097c")
 
-    elif flight_data["flight_status"]=="scheduled":
+    else:
 
         org = flight_data["departure"]
 
@@ -285,13 +285,13 @@ def fetch_route(flight_data):
 
     hazards = check_route(route_report)
 
-    if flight_data["flight_status"]=="active":
+    if flight_data["live"]!=None:
 
         vel=flight_data["live"]["speed_horizontal"]
 
         curr_dt=datetime.timestamp(datetime.fromisoformat(flight_data["live"]["updated"]))
 
-    elif flight_data["flight_status"]=="scheduled":
+    else:
 
         vel = 900
 

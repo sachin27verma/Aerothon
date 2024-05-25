@@ -51,9 +51,9 @@ sample_rt_flights_live={
                 "delay": 0,
                 "scheduled": "2019-12-12T04:20:00+00:00",
                 "estimated": "2019-12-12T04:20:00+00:00",
-                "actual": "null",
-                "estimated_runway": "null",
-                "actual_runway": "null"
+                "actual": None,
+                "estimated_runway": None,
+                "actual_runway": None
             },
             "airline": {
                 "name": "American Airlines",
@@ -64,7 +64,7 @@ sample_rt_flights_live={
                 "number": "1004",
                 "iata": "AA1004",
                 "icao": "AAL1004",
-                "codeshared": "null"
+                "codeshared": None
             },
             "aircraft": {
                "registration": "N160AN",
@@ -132,7 +132,7 @@ def get_coord(icao):
 
 # for flight in sample_rt_flights["data"]:
 #
-#     if flight["live"]!="null":
+#     if flight["live"]!=None:
 #
 #         print(gen_report(flight))
 #

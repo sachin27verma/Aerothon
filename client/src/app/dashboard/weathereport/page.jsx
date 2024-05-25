@@ -43,7 +43,7 @@ const App = () => {
   };
 
   return (
-    <div className="bg-gray-800 text-neon-green min-h-screen flex items-center justify-center">
+    <div className="bg-gray-900 text-neon-green  flex items-center justify-center">
       <div className="w-96 p-8 bg-gray-900 rounded-lg shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-2xl font-bold mb-4">Weather Update</h1>

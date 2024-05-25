@@ -1,85 +1,46 @@
 'use client';
 import React, { useState } from "react";
-import { ResponsiveLine } from "@nivo/line";
 import axios from "axios";
 import Link from "next/link";
 
 export default function Herosection() {
   const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState("");
   const [depIcao, setDepIcao] = useState("");
   const [arrIcao, setArrIcao] = useState("");
 
   const postdata = async () => {
     try {
-        if (!status || !depIcao || !arrIcao) {
-            console.log("Invalid input");
-            return;
-        }
+      if (!status || !depIcao || !arrIcao) {
+        console.log("Invalid input");
+        setLoading(false);
+        return;
+      }
 
-        const response = await axios.post('/api/flightdata', {
-            flight_status: status,
-            dep_icao: depIcao,
-            arr_icao: arrIcao,
-        });
+      setLoading(true);
 
-        // Check if response status is 200 (OK)
-        if (response.status === 200) {
-            console.log("Route: ", response.data.data); // Check the structure of the response
+      const response = await axios.post('/api/flightdata', {
+        flight_status: status,
+        dep_icao: depIcao,
+        arr_icao: arrIcao,
+      });
 
-            // Fetch weather data for each location
-            // const weatherDataPromises = response.data.data.map(async (location) => {
-            //     try {
-            //         const weatherResponse = await axios.post('/api/weather', {
-            //             lat: location.lat,
-            //             lon: location.lon,
-            //         });
-
-            //         // Extract weather description from the weather response
-            //         const weatherDescription = weatherResponse.data?.weather?.[0]?.description;
-
-            //         // Check if weather description is available
-            //         if (weatherDescription) {
-            //             // Create a new object with location data and weather description
-            //             return {
-            //                 lat: location.lat,
-            //                 lon: location.lon,
-            //                 weather: weatherDescription,
-            //                 // Include other properties from the location object if needed
-            //             };
-            //         } else {
-            //             console.error("Weather description not available:", weatherResponse.data);
-            //             return null; // Return null if weather description is not available
-            //         }
-            //     } catch (error) {
-            //         console.error(`Error fetching weather data for location (${location.lat}, ${location.lon}):`, error);
-            //         return null; // Return null if there's an error fetching weather data for this location
-            //     }
-            // });
-
-            // // Wait for all weather data promises to resolve
-            // const weatherData = await Promise.all(weatherDataPromises);
-            // console.log("Weather Data: ", weatherData);
-
-            // // Filter out null values (locations with error fetching weather data)
-            // const filteredWeatherData = weatherData.filter((data) => data !== null);
-
-            // Update the state with the filtered weather data
-            setData(response.data.data);
-            console.log(data);
-
-        } else {
-            console.log("Failed to fetch route");
-            // Handle error here if necessary
-        }
+      if (response.status === 200) {
+        console.log("Route: ", response.data.data);
+        setData(response.data.data);
+      } else {
+        console.log("Failed to fetch route");
+      }
     } catch (error) {
-        console.log("Error while posting data to server on herosection ", error);
+      console.log("Error while posting data to server: ", error);
+    } finally {
+      setLoading(false);
     }
-};
+  };
+
   
-  
+
   return (
     <>
       <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gray-900 text-white">
@@ -154,42 +115,39 @@ export default function Herosection() {
                     onChange={(e) => setStatus(e.target.value)}
                   >
                     <option value="">Select Status</option>
-                    <option value="active">active</option>
-                    <option value="scheduled">scheduled</option>
+                    <option value="active">Active</option>
+                    <option value="scheduled">Scheduled</option>
                   </select>
                 </div>
                 <button
                   className="w-full bg-[#00df9a] font-bold text-medium p-3 rounded-md tracking-wide uppercase"
                   onClick={postdata}
                 >
-                  Find Flights
+                  {loading ? <span>Loading...</span> : <span>Find Flights</span>}
                 </button>
-                {
-        data?.length > 0 && (
-
-          data.map((e , index) => (
-            <div key={index} className="group bg-gray-900 overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-        <Link className="block h-full" href="#">
-          <div className="p-4 md:p-6 space-y-2">
-            <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-300">
-              {index+1}
-            </h3>
-            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-              <MapPinIcon className="w-4 h-4" />
-              <span>{e.lat}, {e.lon}</span>
-            </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
-              <CloudIcon className="w-4 h-4" />
-              <span>Partly Cloudy, 72°F</span>
-            </div>
-          </div>
-        </Link>
-      </div>)
-      )
-          )
-
-          
-      }
+                {data?.length > 0 &&
+                  data.map((e, index) => (
+                    <div
+                      key={index}
+                      className="group bg-gray-900 overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+                    >
+                      <Link className="block h-full" href="#">
+                        <div className="p-4 md:p-6 space-y-2">
+                          <h3 className="text-lg font-semibold group-hover:text-primary transition-colors duration-300">
+                            {index + 1}
+                          </h3>
+                          <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                            <MapPinIcon className="w-4 h-4" />
+                            <span>{e.lat}, {e.lon}</span>
+                          </div>
+                          <div className="flex items-center space-x-2 text-sm text-gray-500 dark:text-gray-400">
+                            <CloudIcon className="w-4 h-4" />
+                            <span>Partly Cloudy, 72°F</span>
+                          </div>
+                        </div>
+                      </Link>
+                    </div>
+                  ))}
               </div>
             </div>
             <div className="flex flex-col justify-center space-y-4">
@@ -198,7 +156,6 @@ export default function Herosection() {
           </div>
         </div>
       </section>
-     
     </>
   );
 }
@@ -240,7 +197,6 @@ function CloudIcon(props) {
     </svg>
   )
 }
-
 
 function MapPinIcon(props) {
   return (
