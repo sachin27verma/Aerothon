@@ -29,10 +29,10 @@ export const AuthProvider = ({ children }) => {
           .then((res) => res.json())
           .then((data) => {
             if (data.error) {
-              console.log(data.error);
+              // console.log(data.error);
               setIsAuthenticated(false);
             } else {
-              console.log(data.profileData);
+              // console.log(data.profileData);
               setUser(data.profileData);
               setIsAuthenticated(true);
             }

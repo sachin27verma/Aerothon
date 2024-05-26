@@ -1,7 +1,7 @@
-import { db } from "@/dbconfig/firebase"; // Assuming you only need db here
+import { db } from "@/dbconfig/firebase";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt';
-import { addDoc, collection, updateDoc, doc } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
 
 export async function POST(req) {
   try {
@@ -28,11 +28,20 @@ export async function POST(req) {
       return NextResponse.json({ message: "Invalid date of birth", status: 400 });
     }
 
+    // Check if email already exists
+    const usersRef = collection(db, "Users");
+    const q = query(usersRef, where("email", "==", email));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      return NextResponse.json({ message: "Email already in use. Try a different email.", status: 400 });
+    }
+
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Add the new user to Firestore
-    const docRef = await addDoc(collection(db, "Users"), {
+    const docRef = await addDoc(usersRef, {
       username,
       email,
       password: hashedPassword,
@@ -40,12 +49,6 @@ export async function POST(req) {
       location,
       dateofbirth
     });
-
-    // Get the generated ID
-    const id = docRef.id;
-
-    // Update the document with the generated ID
-    await updateDoc(doc(db, "Users", id), { id });
 
     return NextResponse.json({ message: "Registration successful", status: 200 });
 

@@ -16,4 +16,4 @@ def get_route():
     return jsonify(response)  # Return the data as a JSON response
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run()

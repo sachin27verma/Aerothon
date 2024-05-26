@@ -34,7 +34,7 @@ export default function Herosection() {
 
       if (response.status === 200) {
         
-        console.log("Route: ", response.data.data);
+        // console.log("Route: ", response.data.data);
 
         if(response.data.data===undefined) {
           alert("Could not find the flight");
@@ -44,7 +44,7 @@ export default function Herosection() {
         setDepIcao('');
         setArrIcao('');
       } else {
-        console.log("Failed to fetch route");
+        // console.log("Failed to fetch route");
       }
     } catch (error) {
       console.log("Error while posting data to server: ", error);

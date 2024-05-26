@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -31,9 +32,7 @@ const Register = () => {
     // Password validation using regex
     const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     if (!passwordPattern.test(password)) {
-      setError(
-        "Password must contain at least one digit, one lowercase letter, one uppercase letter, and be at least 8 characters long."
-      );
+      setError("Password must contain at least one digit, one lowercase letter, one uppercase letter, and be at least 8 characters long.");
       return;
     }
 
@@ -63,12 +62,12 @@ const Register = () => {
 
       if (response.ok) {
         // Register successful
-        console.log("User registered successfully");
+        // console.log("User registered successfully");
         // Redirect to login page
         router.push("/login", { replace: true });
       } else {
         // Register failed
-        console.error("Register failed");
+        // console.error("Register failed");
         const responseData = await response.json(); // Parse error response if available
         if (responseData && responseData.message) {
           setError(responseData.message); // Set error message from server validation
