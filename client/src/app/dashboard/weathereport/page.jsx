@@ -7,6 +7,7 @@ import WeatherComponent from './weathercomponent/WeatherComponent';
 import { TbRefresh } from "react-icons/tb";
 import Link from "next/link";
 import { Divider } from "@nextui-org/react";
+import { useAuth } from "@/context/AuthContext";
 
 export const WeatherIcons = {
   "01d": "/icons/sunny.svg",
@@ -25,14 +26,19 @@ export const WeatherIcons = {
   "11n": "/icons/storm.svg",
 };
 
+const weatherkey=process.env.NEXT_OPENWEATHER_KEY;
+// console.log(weatherkey);
+
 const App = () => {
+
+  
   const [city, updateCity] = useState();
   const [weather, updateWeather] = useState();
 
   const fetchWeather = async (e) => {
     e.preventDefault();
     const response = await Axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_KEY}`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=078476e29d82509ceb8fe6d45828846d`
     );
     updateWeather(await response.data);
   };
