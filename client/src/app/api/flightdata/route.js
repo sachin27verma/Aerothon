@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import axios from "axios";
 
 const API_URL = "http://api.aviationstack.com/v1/flights";
-const YOUR_ACCESS_KEY = "8cac252b7fd597006759bd3579378f56";
+const YOUR_ACCESS_KEY = process.env.AVIATION_KEY
 
 export async function POST(req) {
   try {

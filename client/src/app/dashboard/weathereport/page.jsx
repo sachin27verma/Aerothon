@@ -32,7 +32,7 @@ const App = () => {
   const fetchWeather = async (e) => {
     e.preventDefault();
     const response = await Axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=078476e29d82509ceb8fe6d45828846d`
+      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.OPENWEATHER_KEY}`
     );
     updateWeather(await response.data);
   };
