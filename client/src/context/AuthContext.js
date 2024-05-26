@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     try {
       const token = localStorage.getItem('token');
-      if (token) {
+      if (token && token!=undefined) {
         fetch('/api/profile', {
           method: 'GET',
           headers: {
@@ -46,6 +46,12 @@ export const AuthProvider = ({ children }) => {
               status: 500,
             });
           });
+      }
+      else{
+        setIsAuthenticated(false);
+
+        
+
       }
     } catch (error) {
       console.log("error fetching profile data " + error);

@@ -1,16 +1,25 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { db } from "@/dbconfig/firebase";
-import { collection, query, where, getDocs, collectionGroup } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  collectionGroup,
+} from "firebase/firestore";
 
-const JWT_SECRET = process.env.JWT_SECRET || "defaultSecret"; // Use environment variable for secret
+console.log(process.env.JWT_SECRET);
+
+const JWT_SECRET = process.env.JWT_SECRET; // Use environment variable for secret
 
 // Function to authenticate token
 async function authenticateToken(req) {
-  const authHeader = req.headers.get('authorization');
+  const authHeader = req.headers.get("authorization");
   if (!authHeader) return { error: "No token provided", status: 401 };
-    // console.log(authHeader)
-  const token = authHeader.split(' ')[1];
+  // console.log(authHeader)
+  const token = authHeader.split(" ")[1];
+
   // console.log("token hai " + token)
   if (!token) return { error: "Token missing", status: 401 };
 
@@ -28,12 +37,15 @@ export async function GET(req) {
   const { user, error, status } = await authenticateToken(req);
 
   if (error) {
-    console.log(error)
+    console.log(error);
     return NextResponse.json({ message: error }, { status });
   }
 
   try {
-    const userQuery = query(collection(db, "Users"), where("id", "==", user.userId));
+    const userQuery = query(
+      collection(db, "Users"),
+      where("id", "==", user.userId)
+    );
     const userSnapshot = await getDocs(userQuery);
 
     if (userSnapshot.empty) {
@@ -44,9 +56,15 @@ export async function GET(req) {
     const userData = userDoc.data();
     // console.log(userData)
 
-    return NextResponse.json({ message: "User data found", profileData: userData }, { status: 200 });
+    return NextResponse.json(
+      { message: "User data found", profileData: userData },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return NextResponse.json({ message: 'Internal server error', error: error.toString() }, { status: 500 });
+    return NextResponse.json(
+      { message: "Internal server error", error: error.toString() },
+      { status: 500 }
+    );
   }
 }

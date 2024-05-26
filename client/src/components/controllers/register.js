@@ -1,6 +1,8 @@
 'use client'
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
   const router = useRouter();
@@ -18,33 +20,45 @@ const Register = () => {
 
     // Basic validation
     if (!username.trim() || !email.trim() || !password.trim() || !confirmPassword.trim() || !fullname.trim() || !location.trim() || !dateofbirth.trim()) {
-      setError("All fields are required.");
+
+      toast.warn('All fiels are required');
+      // setError("All fields are required.");
       return;
     }
 
     // Email validation using regex
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailPattern.test(email)) {
-      setError("Invalid email format.");
+
+      toast.warn("Invalid email format")
+
+      // setError("Invalid email format.");
       return;
     }
 
     // Password validation using regex
     const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
     if (!passwordPattern.test(password)) {
+      // toast.error("")
+
+
+
       setError("Password must contain at least one digit, one lowercase letter, one uppercase letter, and be at least 8 characters long.");
       return;
     }
 
     // Confirm password match validation
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      toast.warn("Passwords do not match.")
+
+      // setError("Passwords do not match.");
       return;
     }
 
     // Date of birth validation
     if (isNaN(Date.parse(dateofbirth))) {
-      setError("Invalid date of birth.");
+      toast.warn("Invalid date of birth")
+      // setError("Invalid date of birth.");
       return;
     }
 
@@ -61,6 +75,9 @@ const Register = () => {
       });
 
       if (response.ok) {
+
+        toast.success('Registration Successful')
+
         // Register successful
         // console.log("User registered successfully");
         // Redirect to login page
@@ -70,14 +87,17 @@ const Register = () => {
         // console.error("Register failed");
         const responseData = await response.json(); // Parse error response if available
         if (responseData && responseData.message) {
-          setError(responseData.message); // Set error message from server validation
+          toast.warn(responseData.message)
+          // setError(responseData.message); // Set error message from server validation
         } else {
-          setError("Register failed. Please try again later."); // Default error message
+          toast.error("Register failed. Please try again later.")
+          // setError("Register failed. Please try again later."); // Default error message
         }
       }
     } catch (error) {
       console.error("Error registering user:", error);
-      setError("Register failed. Please try again later.");
+      toast.error("Register failed . Please try again later")
+      // setError("Register failed. Please try again later.");
     }
   };
 
@@ -159,6 +179,7 @@ const Register = () => {
           </div>
         </div>
         <button type="submit" className="w-full bg-[#00df9a] text-gray-900 py-2 rounded font-bold text-2xl tracking-widest hover:bg-[#00c17d]">Register</button>
+        <ToastContainer/>
       </form>
     </div>
   );
