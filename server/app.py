@@ -3,9 +3,11 @@ from route_planning import fetch_route
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Hello, World!"
+@app.route('/',methods=['GET'])
+def return_home():
+    return jsonify({'message':'Welcome to our API!'})
+    
+
 
 @app.route  ('/api/v1/getroute', methods=['POST'])
 def get_route():
