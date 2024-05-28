@@ -1,7 +1,7 @@
 import { db } from "@/dbconfig/firebase";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt';
-import { addDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
 
 export async function POST(req) {
   try {
@@ -40,8 +40,13 @@ export async function POST(req) {
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Generate a unique user ID
+    const newUserRef = doc(usersRef);
+    const id = newUserRef.id;
+
     // Add the new user to Firestore
-    const docRef = await addDoc(usersRef, {
+    await setDoc(newUserRef, {
+      id,
       username,
       email,
       password: hashedPassword,
@@ -50,7 +55,7 @@ export async function POST(req) {
       dateofbirth
     });
 
-    return NextResponse.json({ message: "Registration successful", status: 200 });
+    return NextResponse.json({ message: "Registration successful", userId, status: 200 });
 
   } catch (error) {
     console.error("Error registering new user:", error);
