@@ -15,7 +15,7 @@ export async function POST(req) {
 
     const response = await axios.get(API_URL, {
       params: {
-        access_key: YOUR_ACCESS_KEY,
+        access_key:"8cac252b7fd597006759bd3579378f56",
       },
     });
 
