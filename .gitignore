@@ -1,3 +1,8 @@
 /server/venv/
 
 /.env
+
+.myvenv
+./myvenv
+
+/server/myvenv
