@@ -28,7 +28,7 @@ export async function POST(req) {
 
     if (data) {
       // Post the data to the datatoserver API
-   const response=   await axios.post('https://aerothonserver-ml3k.onrender.com/api/datatoserver', {
+   const response=   await axios.post('/api/datatoserver', {
         data: data,
       });
 

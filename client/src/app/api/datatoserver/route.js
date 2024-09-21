@@ -8,7 +8,7 @@ export async function POST(req) {
     console.log(data);
 
     if (data) {
-      const response = await axios.post("http://localhost:8000/api/v1/getroute", {
+      const response = await axios.post("https://aerothonserver-ml3k.onrender.com/api/v1/getroute", {
         data: data,
       });
     //   console.log("reponse from server "+response.data)
